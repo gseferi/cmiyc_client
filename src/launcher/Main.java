@@ -19,6 +19,7 @@ import javax.swing.JPanel;
 import com.ClientReceiver;
 import com.ClientSender;
 
+import audio.AudioMidi;
 import constants.Commands.Action;
 import constants.Commands.Key;
 import game.Faction;
@@ -224,11 +225,11 @@ public class Main extends JFrame {
 	}
 	
 	public Main() {
-		
 		this.initDefaults();
 		this.initGUI();
 		this.initOfflineScreen();
-				
+		AudioMidi audio = new AudioMidi();
+		audio.run();
 	}
 	
 	private void initDefaults() {
