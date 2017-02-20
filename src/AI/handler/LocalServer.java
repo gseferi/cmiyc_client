@@ -1,4 +1,4 @@
-package AI.server;
+package AI.handler;
 
 public class LocalServer {
 
