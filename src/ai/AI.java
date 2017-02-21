@@ -1,5 +1,7 @@
 package ai;
 
+import java.util.UUID;
+
 import ai.handler.Handler;
 import game.Player;
 
@@ -7,21 +9,20 @@ public abstract class AI extends Player implements Runnable {
 
 	private Handler handler;
 	private boolean running;
-	
-	
-	public AI(String _clientID, Handler handler) {
-		super(_clientID);
+
+	public AI(Handler handler) {
+		super(UUID.randomUUID().toString());
 		this.handler = handler;
 		setRunning(false);
 	}
-	
-	public void start(){
+
+	public void start() {
 		Thread t = new Thread(this);
 		setRunning(true);
 		t.start();
 	}
-	
-	public void end(){
+
+	public void end() {
 		setRunning(false);
 	}
 

@@ -9,7 +9,7 @@ public class Security extends AI {
 	private SecurityState state;
 
 	public Security(Handler handler) {
-		super("AISecurity", handler);
+		super(handler);
 		this.faction = Faction.SECURITY;
 		// TODO Auto-generated constructor stub
 	}

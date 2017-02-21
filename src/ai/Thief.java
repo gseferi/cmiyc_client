@@ -7,20 +7,20 @@ import game.Faction;
 public class Thief extends AI {
 
 	private ThiefState state;
-	
+
 	public Thief(Handler handler) {
-		super("AIThief", handler);
+		super(handler);
 		this.faction = Faction.THIEF;
 		// TODO Auto-generated constructor stub
 	}
 
 	@Override
 	public void run() {
-		
-		while(isRunning()){
-			
+
+		while (isRunning()) {
+
 		}
 
 	}
-
+	
 }
