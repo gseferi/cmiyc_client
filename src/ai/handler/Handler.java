@@ -71,4 +71,18 @@ public class Handler {
 		}
 
 	}
+
+	/**
+	 * Tell the AIs that they need to update
+	 */
+	public void update() {
+		Iterator<Entry<String, Player>> i = gameData.players.entrySet().iterator();
+		while (i.hasNext()) {
+			Map.Entry<String, Player> pair = (Map.Entry<String, Player>) i.next();
+			if (pair.getValue() instanceof AI) {
+				((AI) pair.getValue()).setUpdate(true);
+			}
+		}
+	}
+
 }

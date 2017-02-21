@@ -9,10 +9,11 @@ public abstract class AI extends Player implements Runnable {
 
 	private Handler handler;
 	private boolean running;
+	private boolean update = false;
 
 	public AI(Handler handler) {
 		super(UUID.randomUUID().toString());
-		this.handler = handler;
+		this.setHandler(handler);
 		setRunning(false);
 	}
 
@@ -32,6 +33,22 @@ public abstract class AI extends Player implements Runnable {
 
 	public void setRunning(boolean running) {
 		this.running = running;
+	}
+
+	public boolean needsUpdate() {
+		return update;
+	}
+
+	public void setUpdate(boolean update) {
+		this.update = update;
+	}
+
+	public Handler getHandler() {
+		return handler;
+	}
+
+	public void setHandler(Handler handler) {
+		this.handler = handler;
 	}
 
 }
