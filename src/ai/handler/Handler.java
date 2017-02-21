@@ -1,5 +1,7 @@
 package ai.handler;
 
+import java.util.Map.Entry;
+
 import ai.AI;
 import ai.Security;
 import ai.Thief;
@@ -32,10 +34,10 @@ public class Handler {
 	public void addPlayers(int numSecurity, int numThieves) {
 
 		for (int i = 0; i < numSecurity; i++)
-			gameData.players.add(new Security(this));
+			gameData.players.put("Security" + i, new Security(this));
 
 		for (int i = 0; i < numThieves; i++)
-			gameData.players.add(new Thief(this));
+			gameData.players.put("Thief" + i, new Thief(this));
 
 	}
 
@@ -44,9 +46,9 @@ public class Handler {
 	 */
 	public void start() {
 
-		for (Player ai : gameData.players) {
-			if (ai instanceof AI) {
-				((AI) ai).start();
+		for (Entry<String, Player> e : gameData.players.entrySet()) {
+			if (e.getValue() instanceof AI) {
+				((AI) e.getValue()).start();
 			}
 		}
 
@@ -57,9 +59,9 @@ public class Handler {
 	 */
 	public void end() {
 
-		for (Player ai : gameData.players) {
-			if (ai instanceof AI) {
-				((AI) ai).end();
+		for (Entry<String, Player> e : gameData.players.entrySet()) {
+			if (e.getValue() instanceof AI) {
+				((AI) e.getValue()).end();
 			}
 		}
 
