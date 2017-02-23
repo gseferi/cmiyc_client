@@ -228,8 +228,6 @@ public class Main extends JFrame {
 		this.initDefaults();
 		this.initGUI();
 		this.initOfflineScreen();
-		AudioMidi audio = new AudioMidi();
-		audio.run();
 	}
 	
 	private void initDefaults() {
