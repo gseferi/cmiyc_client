@@ -226,19 +226,23 @@ public class Main extends JFrame {
 	
 	public Main() {
 		this.initDefaults();
-		this.initGUI();
-		this.initOfflineScreen();
-		AudioMidi audio = new AudioMidi();
-		audio.run();
+		//this.initGUI();
+		//this.initOfflineScreen();
+		//AudioMidi audio = new AudioMidi();
+		//audio.run();
 	}
 	
 	private void initDefaults() {
+	
+		this.gameData = new GameData();
+		
 		
 		this.queue = new ArrayList<Transferable>();
 		
 		this.sender = new ClientSender( this );
 		this.receiver = new ClientReceiver( this );
 		
+	
 		this.id = UUID.randomUUID().toString();
 		this.username = "Unknown";
 		
@@ -250,6 +254,9 @@ public class Main extends JFrame {
 	
 		this.gui = new ClientLauncher();
 		
+	
+	
+	
 	}
 
 	private void initGameScreen() {
