@@ -5,7 +5,7 @@ import java.net.URL;
 
 public enum Sound {
 	//FOOTSTEP ("footsteps.wav"), MUSIC_MAIN ("output.midi", AudioType.MIDI), DOOR_OPEN ("open.wav"), BATTERY_LOW ("battery.wav"), WINDOW_BREAK ("window.wav");
-	MUSIC_MAIN ("snow4.mid", AudioType.MIDI);
+	MUSIC_MAIN ("output.wav");
 	
 	private File audiofile;
 	private AudioPlayer player;
@@ -31,7 +31,7 @@ public enum Sound {
 	}
 	
 	public void playLoop() {
-		this.player.stop();
+		this.player.play(true);;
 	}
 	
 	public void stop() {
