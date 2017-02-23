@@ -1,33 +1,35 @@
 package audio;
 
-import java.io.File;
-import java.net.URL;
-
-import javax.sound.sampled.AudioInputStream;
-import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.Clip;
-
-public class AudioHandler implements Runnable {
+public class AudioHandler {
 	
-	public boolean running;
-
+	private AudioMidi midi;
+	private AudioWav wav;
+	
 	public AudioHandler() {
-		
+		midi = new AudioMidi();
+		wav = new AudioWav();
 	}
 	
-	public static void main(String[] args) {
-		//playMusic();
-	}
-
-	@Override
-	public void run() {
-		running = true;
-		playMusic();
-		running = false;
+	private void play(Sound sound, boolean loop) {
+		switch(sound.getType()) {
+			case MIDI:
+				midi.play(sound.getAudiofile(), loop);
+			case WAV:
+				wav.play(sound.getAudiofile(), loop);
+		}
 	}
 	
-	public void playMusic() {
-		
+	public void playLoop(Sound sound) {
+		play(sound, true);
+	}
+	
+	public void play(Sound sound) {
+		play(sound, false);
+	}
+	
+	public void stop() {
+		if (midi.isRunning()) midi.stop();
+		if (wav.isRunning()) wav.stop();
 	}
 	
 }

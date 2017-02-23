@@ -33,23 +33,16 @@ public class AudioMidi {
 			e.printStackTrace();
 		}
 	}
-	
-	private void shutdown() {
-		sequencer.stop();
-		sequencer.close();
-	}
 
-	public void play(File audioFile) {
+	public void play(File audioFile, boolean loop) {
 		if (!running) setup();
 		InputStream is;
 		try {
 			is = new BufferedInputStream(new FileInputStream(audioFile));
-			if(!sequencer.isRunning()) {
-				System.out.println("here");
-				sequencer.setSequence(is);
-		    	sequencer.start();
-			}
-			System.out.println("here");
+			if (sequencer.isRunning()) sequencer.stop();
+			sequencer.setSequence(is);
+	    	sequencer.start();
+			if (loop) sequencer.setLoopCount(Sequencer.LOOP_CONTINUOUSLY);
 		} catch (IOException | InvalidMidiDataException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -58,7 +51,8 @@ public class AudioMidi {
 	
 	public void stop() {
 		running = false;
-		shutdown();
+		sequencer.stop();
+		sequencer.close();
 	}
 	
 	public boolean isRunning() {
