@@ -23,13 +23,15 @@ public class GraphicsTest extends Application {
         p.position.y = 160;
 
         Pane pane = new Pane();
-        GameDrawer gd = new GameDrawer(pane, game);
+        GameDrawer drawer = new GameDrawer(pane, game);
         Scene scene = new Scene(pane);
         stage.setScene(scene);
         stage.sizeToScene();
         stage.setTitle("Graphics test");
         stage.show();
 
-        gd.draw();
+        Thread drawerThread = new Thread(new GameLoop(drawer));
+        drawerThread.setDaemon(true);
+        drawerThread.start();
     }
 }
