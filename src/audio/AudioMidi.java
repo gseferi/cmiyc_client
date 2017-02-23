@@ -3,17 +3,13 @@ package audio;
 import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.URL;
 
 import javax.sound.midi.InvalidMidiDataException;
 import javax.sound.midi.MidiSystem;
 import javax.sound.midi.MidiUnavailableException;
 import javax.sound.midi.Sequencer;
-import javax.sound.sampled.AudioInputStream;
-import javax.sound.sampled.AudioSystem;
 
 public class AudioMidi {
 	
@@ -29,7 +25,7 @@ public class AudioMidi {
 		}
 	}
 	
-	public void setup() {
+	private void setup() {
 		running = true;
 		try {
 			sequencer.open();
@@ -38,7 +34,7 @@ public class AudioMidi {
 		}
 	}
 	
-	public void shutdown() {
+	private void shutdown() {
 		sequencer.stop();
 		sequencer.close();
 	}
@@ -63,5 +59,9 @@ public class AudioMidi {
 	public void stop() {
 		running = false;
 		shutdown();
+	}
+	
+	public boolean isRunning() {
+		return running;
 	}
 }
