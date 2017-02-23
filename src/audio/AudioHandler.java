@@ -32,4 +32,13 @@ public class AudioHandler {
 		if (wav.isRunning()) wav.stop();
 	}
 	
+	public void stop(Sound sound) {
+		switch(sound.getType()) {
+		case MIDI:
+			midi.stop();
+		case WAV:
+			wav.stop();
+		}
+	}
+	
 }
