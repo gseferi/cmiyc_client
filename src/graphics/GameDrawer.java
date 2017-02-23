@@ -9,7 +9,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 
-public class GameDrawer extends Pane {
+public class GameDrawer {
 
     private GameData game;
     private Pane pane;
