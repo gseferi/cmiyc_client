@@ -5,16 +5,20 @@ import javafx.application.Platform;
 public class GameLoop implements Runnable {
 
     private GameDrawer drawer;
-
-    public GameLoop(GameDrawer drawer) {
+    private GameLogic logic;
+    
+    public GameLoop(GameDrawer drawer, GameLogic logic) {
         this.drawer = drawer;
+        this.logic = logic;
     }
 
     public void run() {
         while (true) {
 
+        	logic.update();
+        	
             Platform.runLater(() -> {
-                drawer.draw();
+            	drawer.draw();
             });
 
             try {

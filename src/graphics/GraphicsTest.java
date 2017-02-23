@@ -5,6 +5,7 @@ import game.Player;
 
 import javafx.application.Application;
 import javafx.scene.Scene;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
@@ -21,8 +22,10 @@ public class GraphicsTest extends Application {
         game.players.put(p.clientID, p);
         p.position.x = 100;
         p.position.y = 160;
-
         Pane pane = new Pane();
+
+        GameLogic logic = new GameLogic(game, pane);
+        
         GameDrawer drawer = new GameDrawer(pane, game);
         Scene scene = new Scene(pane);
         stage.setScene(scene);
