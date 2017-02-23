@@ -22,10 +22,10 @@ public class GameDrawer {
     public void draw() {
         pane.getChildren().clear();
 
-        double y = main.player.position.x;
-        double x = main.player.position.y;
-        Circle c = new Circle(20, Color.BLUE);
-        c.relocate(x, y);
+        double x = main.player.position.x;
+        double y = main.player.position.y;
+        Circle c = new Circle(10, Color.BLUE);
+        c.relocate(x - 10, y - 10);
         pane.getChildren().add(c);
     }
 }
