@@ -42,7 +42,7 @@ public class GameLogic {
 		client.player.direction = angle; 
 		
 		if (keys.containsKey(KeyCode.W) && keys.get(KeyCode.W)) {
-			client.player.position.x += client.player.speed * Math.cos(angle); 
+			client.player.position.x += client.player.speed * Math.cos(angle);  // hello
 			client.player.position.y += client.player.speed * Math.sin(angle);
 		}
 		if (keys.containsKey(KeyCode.S) && keys.get(KeyCode.S)) {
