@@ -38,8 +38,8 @@ public class GameLogic {
 
 	public void update() {
 		//double angle = Maths.angle(new Position(client.player.position.x, client.player.position.y), new Position(mouseX,mouseY);				
-		double angle = getMouseAngle(client.player.position.x, client.player.position.y, mouseX, mouseY);
-		client.player.direction = angle;
+		double angle = (Maths.angle(client.player.position.x, client.player.position.y, mouseX, mouseY));
+		client.player.direction = angle; 
 		
 		if (keys.containsKey(KeyCode.W) && keys.get(KeyCode.W)) {
 			client.player.position.x += client.player.speed * Math.cos(angle); 
@@ -58,31 +58,9 @@ public class GameLogic {
 			client.player.position.y += client.player.speed * Math.sin(angle + Math.toRadians(90));
 		}
 
-	}
-	
-	public double getMouseAngle(double myX, double myY, double mouseX, double mouseY) {
-		if (myX != mouseX && myY != mouseY) {
-			double xdif = (mouseX - myX);
-			double ydif = (mouseY - myY);
-			double angle = 0; // in radians
-			angle = -Math.atan(ydif / xdif);
-			if (xdif < 0) {
-				if (ydif < 0) {
-					angle += Math.PI;
-				} else {
-					angle -= Math.PI;
-				}
-			}
-			return -angle;
-		} else if (myX > mouseX) {
-			return Math.PI;
-		} else if (myX < mouseX) {
-			return 0.0;
-		} else if (myY > mouseY) {
-			return -Math.PI / 2.0;
-		} else if (myY < mouseY) {
-			return Math.PI / 2.0;
-		}
-		return 0.0;
+		// TODO Do dragging with a click of a button.
+		// Do collisions
+		// 
+
 	}
 }
