@@ -1,5 +1,7 @@
 package graphics;
 
+import game.Obstacle;
+
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
@@ -21,6 +23,12 @@ public class GraphicsTest extends Application {
 
     public void start(Stage stage) {
         Main main = new Main();
+
+        main.gameData.obstacles.add(new Obstacle(20, 20, 50, 50));
+        main.gameData.obstacles.add(new Obstacle(400, 420, 120, 80));
+        main.gameData.obstacles.add(new Obstacle(200, 180, 60, 120));
+        main.gameData.obstacles.add(new Obstacle(600, 50, 100, 100));
+
         Pane pane = new Pane();
 
         GameLogic logic = new GameLogic(main, pane);

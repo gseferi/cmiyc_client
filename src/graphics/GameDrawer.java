@@ -1,10 +1,12 @@
 package graphics;
 
 import game.Obstacle;
+
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
+
 import launcher.Main;
 
 /**
@@ -37,16 +39,13 @@ public class GameDrawer {
         double y = main.player.position.y;
         Circle c = new Circle(10, Color.BLUE);
         c.relocate(x - 10, y - 10);
-        
-        for(Obstacle i : main.gameData.obstacles) {
-        	Rectangle obstacle = new Rectangle(i.topLeft.x, i.topLeft.y, i.width, i.height);
-        	obstacle.setFill(Color.AQUA);
-        	pane.getChildren().add(obstacle);
-        }
-        
         pane.getChildren().add(c);
-        
-        
-        
+
+        for (Obstacle o : main.gameData.obstacles) {
+            Rectangle obstacle = new Rectangle(o.topLeft.x, o.topLeft.y,
+                    o.width, o.height);
+            obstacle.setFill(Color.AQUA);
+            pane.getChildren().add(obstacle);
+        }
     }
 }
