@@ -1,27 +1,37 @@
 package graphics;
 
-import game.GameData;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
+
 import launcher.Main;
 
+/**
+ * Draws the state of the game to a Pane.
+ */
 public class GameDrawer {
 
-    private GameData game;
-    private Pane pane;
     private Main main;
-    public GameDrawer(Pane pane, GameData game, Main main) {
-        this.game = game;
+    private Pane pane;
+
+    /**
+     * Constructs a new GameDrawer. Default graphics settings are set on the
+     * Pane.
+     */
+    public GameDrawer(Main main, Pane pane) {
         this.pane = pane;
         this.main = main;
         pane.setStyle("-fx-background-color: black;");
         pane.setPrefSize(840, 530);
     }
 
+    /**
+     * Draws the current state of the game to the Pane.
+     */
     public void draw() {
         pane.getChildren().clear();
 
+        // Draw the client player
         double x = main.player.position.x;
         double y = main.player.position.y;
         Circle c = new Circle(10, Color.BLUE);
