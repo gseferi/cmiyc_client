@@ -7,12 +7,14 @@ import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import javax.sound.sampled.LineUnavailableException;
 
-public class AudioWav {
+public class AudioWav implements AudioPlayer {
 	private boolean running;
 	private Clip player;
+	private File audiofile;
 	
-	public AudioWav() {
+	public AudioWav(File audiofile) {
 		running = false;
+		this.audiofile = audiofile;
 		try {
 			player = AudioSystem.getClip();
 		} catch (LineUnavailableException e) {
@@ -21,7 +23,7 @@ public class AudioWav {
 		}
 	}
 	
-	public void play(File audiofile, boolean loop) {
+	public void play(boolean loop) {
 		try {
 			if(running) stop();
 			AudioInputStream ais = AudioSystem.getAudioInputStream(audiofile);

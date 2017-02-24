@@ -11,13 +11,15 @@ import javax.sound.midi.MidiSystem;
 import javax.sound.midi.MidiUnavailableException;
 import javax.sound.midi.Sequencer;
 
-public class AudioMidi {
+public class AudioMidi implements AudioPlayer {
 	
 	private Sequencer sequencer;
+	private File audioFile;
 	private boolean running;
 	
-	public AudioMidi() {
+	public AudioMidi(File audioFile) {
 		running = false;
+		this.audioFile = audioFile;
 		try {
 			sequencer = MidiSystem.getSequencer();
 		} catch (MidiUnavailableException e) {
@@ -34,7 +36,7 @@ public class AudioMidi {
 		}
 	}
 
-	public void play(File audioFile, boolean loop) {
+	public void play(boolean loop) {
 		if (!running) setup();
 		InputStream is;
 		try {
