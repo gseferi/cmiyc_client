@@ -228,15 +228,20 @@ public class Main extends JFrame {
 		this.initDefaults();
 		this.initGUI();
 		this.initOfflineScreen();
+
 	}
 	
 	private void initDefaults() {
+	
+		this.gameData = new GameData();
+		
 		
 		this.queue = new ArrayList<Transferable>();
 		
 		this.sender = new ClientSender( this );
 		this.receiver = new ClientReceiver( this );
 		
+	
 		this.id = UUID.randomUUID().toString();
 		this.username = "Unknown";
 		
@@ -248,6 +253,9 @@ public class Main extends JFrame {
 	
 		this.gui = new ClientLauncher();
 		
+	
+	
+	
 	}
 
 	private void initGameScreen() {
