@@ -1,8 +1,10 @@
 package graphics;
 
 import game.Obstacle;
-
+import game.Treasure;
+import game.constants.GameSettings;
 import javafx.application.Application;
+import javafx.scene.Cursor;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
@@ -29,12 +31,17 @@ public class GraphicsTest extends Application {
         main.gameData.obstacles.add(new Obstacle(200, 180, 60, 120));
         main.gameData.obstacles.add(new Obstacle(600, 50, 100, 100));
 
+        main.gameData.treasures.add(new Treasure(300, 300));
+        main.gameData.treasures.add(new Treasure(310, 310));
+        main.gameData.treasures.add(new Treasure(400, 400));
+        
         Pane pane = new Pane();
 
         GameLogic logic = new GameLogic(main, pane);
         GameDrawer drawer = new GameDrawer(main, pane);
 
         Scene scene = new Scene(pane);
+        scene.setCursor(Cursor.CROSSHAIR); // TODO We could add our own cursor later.
         stage.setScene(scene);
         stage.sizeToScene();
         stage.setTitle("Graphics test");

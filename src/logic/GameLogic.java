@@ -1,12 +1,18 @@
 package logic;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
+import game.Faction;
+import game.Obstacle;
+import game.Treasure;
+import game.constants.GameSettings;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.Pane;
-
+import javafx.scene.shape.Circle;
+import javafx.scene.shape.Rectangle;
+import javafx.scene.shape.Shape;
 import launcher.Main;
-
 import util.Maths;
 
 /**
@@ -16,14 +22,27 @@ public class GameLogic {
 
     private HashMap<KeyCode, Boolean> keys = new HashMap<KeyCode, Boolean>();
 
+    
     private Main client;
     private double mouseX;
     private double mouseY;
 
+    private Rectangle fullMap;
+    private Shape walkableArea;
+    
     public GameLogic(Main client, Pane pane) {
-
         this.client = client;
-
+        this.fullMap = new Rectangle(0, 0, 800, 450); // Must change this to inner arena size
+        this.walkableArea = this.fullMap;
+        
+        // Makes all obstacles usable Rectangle objects
+        for(Obstacle o : client.gameData.obstacles) {
+        	Rectangle object = new Rectangle(o.topLeft.x, o.topLeft.y, o.width, o.height);
+        	Shape s = Rectangle.subtract(walkableArea, object);
+        	walkableArea = s;
+        }
+        
+        // Adds listeners 
         pane.setFocusTraversable(true);
         pane.setOnKeyPressed(e -> {
             keys.put(e.getCode(), true);
@@ -36,38 +55,69 @@ public class GameLogic {
             mouseY = e.getSceneY();
         });
     }
-
+    
     public void update() {
-        // double angle = Maths.angle(new Position(client.player.position.x,
-        // client.player.position.y), new Position(mouseX,mouseY);
-        double angle = (Maths.angle(client.player.position.x,
-                client.player.position.y, mouseX, mouseY));
-        client.player.direction = angle;
+    	// First we find the angle from the mouse to the player
+        double angle = Maths.angle(client.player.position.x, client.player.position.y, mouseX, mouseY);
+        client.player.direction = angle; // Updates client's direction (currently in radians)
 
         if (keys.containsKey(KeyCode.W) && keys.get(KeyCode.W)) {
-            client.player.position.x += client.player.speed * Math.cos(angle);
-            client.player.position.y += client.player.speed * Math.sin(angle);
+        	double tempX = client.player.position.x , tempY = client.player.position.y;
+            tempX += client.player.speed * Math.cos(angle);
+            tempY += client.player.speed * Math.sin(angle);
+            if (walkableArea.contains(tempX, tempY)) { // Only update movement when the area is still walkable
+            	client.player.position.x = tempX;
+            	client.player.position.y = tempY;
+            }
         }
         if (keys.containsKey(KeyCode.S) && keys.get(KeyCode.S)) {
-            client.player.position.x -= client.player.speed * Math.cos(angle);
-            client.player.position.y -= client.player.speed * Math.sin(angle);
+        	double tempX = client.player.position.x , tempY = client.player.position.y;
+        	tempX -= client.player.speed * Math.cos(angle);
+            tempY -= client.player.speed * Math.sin(angle);
+            if (walkableArea.contains(tempX, tempY)) { // Only update movement when the area is still walkable
+            	client.player.position.x = tempX;
+            	client.player.position.y = tempY;
+            }
         }
         if (keys.containsKey(KeyCode.A) && keys.get(KeyCode.A)) {
-            client.player.position.x += client.player.speed
-                    * Math.cos(angle - Math.toRadians(90));
-            client.player.position.y += client.player.speed
-                    * Math.sin(angle - Math.toRadians(90));
+        	double tempX = client.player.position.x , tempY = client.player.position.y;
+            tempX += client.player.speed * Math.cos(angle - Math.PI/2);
+            tempY += client.player.speed * Math.sin(angle - Math.PI/2);
+            if (walkableArea.contains(tempX, tempY)) { // Only update movement when the area is still walkable
+            	client.player.position.x = tempX;
+            	client.player.position.y = tempY;
+            }
         }
         if (keys.containsKey(KeyCode.D) && keys.get(KeyCode.D)) {
-            client.player.position.x += client.player.speed
-                    * Math.cos(angle + Math.toRadians(90));
-            client.player.position.y += client.player.speed
-                    * Math.sin(angle + Math.toRadians(90));
+            double tempX = client.player.position.x , tempY = client.player.position.y;
+            tempX += client.player.speed * Math.cos(angle + Math.PI/2);
+            tempY += client.player.speed * Math.sin(angle + Math.PI/2);
+            if (walkableArea.contains(tempX, tempY)) { // Only update movement when the area is still walkable
+            	client.player.position.x = tempX;
+            	client.player.position.y = tempY;
+            }
         }
-
-        // TODO Do dragging with a click of a button.
-        // Do collisions
-        //
-
+        if (keys.containsKey(KeyCode.SPACE) && keys.get(KeyCode.SPACE)) { // Action button to collect treasures (FOR THIEVES) 
+        	Treasure tempT = null; // Saves a treasures to be collected
+        	for (Treasure t : client.gameData.treasures) {
+        		double tx = t.position.x;
+        		double ty = t.position.y;
+        		double px = client.player.position.x;
+        		double py = client.player.position.y;
+        		if (Math.pow(px - tx,2) + Math.pow(py - ty, 2) < Math.pow(GameSettings.Thief.stealRadius, 2)) { // Treasure is in catch range. 
+        			tempT = t; // This is the treasure to delete
+        		}
+        	}
+        	if (tempT != null) { // We can't remove the treasure in the for loop because it will cause concurrentModificationException. 
+        		System.out.println("Score! Add: " + tempT.value);
+        		client.gameData.treasures.remove(tempT); // So we remove it here        		
+        	}
+        	
+        	try { // Adds a little delay so villains won't spam action button.
+        		Thread.sleep(100);
+        	} catch (Exception e) {
+        		e.printStackTrace();
+        	}
+        }        
     }
 }
