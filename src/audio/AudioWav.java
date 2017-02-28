@@ -5,7 +5,10 @@ import java.io.File;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
+import javax.sound.sampled.FloatControl;
 import javax.sound.sampled.LineUnavailableException;
+
+import util.Debug;
 
 public class AudioWav implements AudioPlayer {
 	private boolean running;
@@ -44,5 +47,14 @@ public class AudioWav implements AudioPlayer {
 	
 	public boolean isRunning() {
 		return running;
+	}
+	
+	public void setVol(float _vol, float _pan) {
+			FloatControl vol = (FloatControl) player.getControl(FloatControl.Type.MASTER_GAIN);
+			FloatControl pan = (FloatControl) player.getControl(FloatControl.Type.PAN);
+			if (_vol <= vol.getMaximum() && _vol >= vol.getMinimum()) vol.setValue(_vol);
+			else Debug.say("Invalid Volume parameter");
+			if (-1 <= _pan && _pan <= 1) pan.setValue(_pan);
+			else Debug.say("Invalid pan parameter");
 	}
 }
