@@ -1,16 +1,15 @@
 package graphics;
 
+import game.Camera;
 import game.Obstacle;
+import game.Player;
 import game.Treasure;
-import game.constants.GameSettings;
 import javafx.application.Application;
 import javafx.scene.Cursor;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
-
 import launcher.Main;
-
 import logic.GameLogic;
 import logic.GameLoop;
 
@@ -34,6 +33,11 @@ public class GraphicsTest extends Application {
         main.gameData.treasures.add(new Treasure(300, 300));
         main.gameData.treasures.add(new Treasure(310, 310));
         main.gameData.treasures.add(new Treasure(400, 400));
+        
+        main.gameData.players.put("bob", new Player("bob"));
+        
+        main.gameData.cameras.add(new Camera(500, 300, 0, 50));
+        
         
         Pane pane = new Pane();
 

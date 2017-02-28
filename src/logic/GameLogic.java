@@ -1,15 +1,14 @@
 package logic;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 import game.Faction;
 import game.Obstacle;
+import game.Player;
 import game.Treasure;
 import game.constants.GameSettings;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.Pane;
-import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
 import launcher.Main;
@@ -24,6 +23,7 @@ public class GameLogic {
 
     
     private Main client;
+    private Faction faction; // Client's faction
     private double mouseX;
     private double mouseY;
 
@@ -32,10 +32,11 @@ public class GameLogic {
     
     public GameLogic(Main client, Pane pane) {
         this.client = client;
+        this.faction = client.player.faction;
         this.fullMap = new Rectangle(0, 0, 800, 450); // Must change this to inner arena size
         this.walkableArea = this.fullMap;
         
-        // Makes all obstacles usable Rectangle objects
+        // Makes the walkable area
         for(Obstacle o : client.gameData.obstacles) {
         	Rectangle object = new Rectangle(o.topLeft.x, o.topLeft.y, o.width, o.height);
         	Shape s = Rectangle.subtract(walkableArea, object);
@@ -97,7 +98,7 @@ public class GameLogic {
             	client.player.position.y = tempY;
             }
         }
-        if (keys.containsKey(KeyCode.SPACE) && keys.get(KeyCode.SPACE)) { // Action button to collect treasures (FOR THIEVES) 
+        if (Faction.THIEF == faction && keys.containsKey(KeyCode.SPACE) && keys.get(KeyCode.SPACE)) { // Action button to collect treasures (FOR THIEVES) 
         	Treasure tempT = null; // Saves a treasures to be collected
         	for (Treasure t : client.gameData.treasures) {
         		double tx = t.position.x;
@@ -119,5 +120,8 @@ public class GameLogic {
         		e.printStackTrace();
         	}
         }        
+ 
+        // TODO Catch thieves for security
+        // TODO Catch thieves for camera
     }
 }
