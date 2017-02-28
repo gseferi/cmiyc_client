@@ -30,6 +30,7 @@ public class GameLogic {
     private Rectangle fullMap;
     private Shape walkableArea;
     
+    
     public GameLogic(Main client, Pane pane) {
         this.client = client;
         this.faction = client.player.faction;
