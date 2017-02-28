@@ -9,10 +9,12 @@ public enum Sound {
 	
 	private File audiofile;
 	private AudioPlayer player;
+	private AudioType type;
 
 	private Sound(String filename) {
 		this.audiofile = new File(getClass().getResource(filename).getPath());
 		this.player = new AudioWav(this.audiofile);
+		this.type = AudioType.WAV;
 	}
 	
 	private Sound(String filename, AudioType type) {
@@ -21,8 +23,10 @@ public enum Sound {
 		switch(type) {
 		case MIDI:
 			this.player = new AudioMidi(this.audiofile);
+			this.type = AudioType.MIDI;
 		case WAV:
 			this.player = new AudioWav(this.audiofile);
+			this.type = AudioType.WAV;
 		}
 	}
 
@@ -36,5 +40,13 @@ public enum Sound {
 	
 	public void stop() {
 		this.player.stop();
+	}
+	
+	public void setVol(double vol, double pan) {
+		if (this.type == AudioType.WAV) this.player.setVol((float) vol, (float) pan);
+	}
+	
+	public void setVol(double vol) {
+		if (this.type == AudioType.WAV) this.player.setVol((float) vol, (float) 0.5);
 	}
 }
