@@ -92,7 +92,7 @@ public class Security extends AI {
 	 * @see ai.AI#updateState()
 	 */
 	protected void updateState() {
-
+		
 		// Get the volume for the players
 		leftVol = Maths.getLeftVolume(this.position, this.getHandler().gameData.players);
 		rightVol = Maths.getLeftVolume(this.position, this.getHandler().gameData.players);
@@ -115,6 +115,10 @@ public class Security extends AI {
 				chasingDistance = closestDist;
 			}
 		}
+		
+		// Should the AI be moving to a waypoint
+		
+		// Should the AI be looking around at a waypoint
 
 	}
 
