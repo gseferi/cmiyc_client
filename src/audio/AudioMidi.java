@@ -56,4 +56,6 @@ public class AudioMidi implements AudioPlayer {
 	public boolean isRunning() {
 		return running;
 	}
+	
+	public void setVol(float vol, float pan) {};
 }
