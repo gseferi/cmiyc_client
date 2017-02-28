@@ -42,6 +42,8 @@ public class Security extends AI {
 				}
 			}
 
+			updateState();
+			
 			switch (this.state) {
 			case CHASING:
 				updateChasePosition();
@@ -64,6 +66,11 @@ public class Security extends AI {
 
 		}
 
+	}
+
+	private void updateState() {
+		
+		
 	}
 
 	private void updateScanningPosition() {

@@ -27,28 +27,65 @@ public abstract class AI extends Player implements Runnable {
 		setRunning(false);
 	}
 
+	/**
+	 * Determine whether the AI is running
+	 * 
+	 * @return Whether or not the AI is running
+	 */
 	public boolean isRunning() {
 		return running;
 	}
 
+	/**
+	 * Set the AI to be running or not
+	 * 
+	 * @param running
+	 *            Whether or not the AI should be running
+	 */
 	public void setRunning(boolean running) {
 		this.running = running;
 	}
 
+	/**
+	 * Determine whether the AI needs updating
+	 * 
+	 * @return Whether or not the AI needs to be updated
+	 */
 	public boolean needsUpdate() {
 		return update;
 	}
 
+	/**
+	 * Set whether the AI needs to update itself
+	 * 
+	 * @param update
+	 */
 	public void setUpdate(boolean update) {
 		this.update = update;
 	}
 
+	/**
+	 * Get the handler for the AI
+	 * 
+	 * @return The AI handler being used
+	 */
 	public Handler getHandler() {
 		return handler;
 	}
 
+	/**
+	 * Set the AI handler for this AI
+	 * 
+	 * @param handler
+	 *            The AI handler to be used
+	 */
 	public void setHandler(Handler handler) {
 		this.handler = handler;
 	}
+
+	/**
+	 * Update the state of the AI
+	 */
+	public abstract void updateState();
 
 }
