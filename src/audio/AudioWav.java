@@ -49,12 +49,16 @@ public class AudioWav implements AudioPlayer {
 		return running;
 	}
 	
-	public void setVol(float _vol, float _pan) {
-			FloatControl vol = (FloatControl) player.getControl(FloatControl.Type.MASTER_GAIN);
-			FloatControl pan = (FloatControl) player.getControl(FloatControl.Type.PAN);
-			if (_vol <= vol.getMaximum() && _vol >= vol.getMinimum()) vol.setValue(_vol);
-			else Debug.say("Invalid Volume parameter");
-			if (-1 <= _pan && _pan <= 1) pan.setValue(_pan);
-			else Debug.say("Invalid pan parameter");
+	public void setVol(float vol, float pan) {
+		FloatControl volControl = (FloatControl) player.getControl(FloatControl.Type.MASTER_GAIN);
+		FloatControl panControl = (FloatControl) player.getControl(FloatControl.Type.PAN);
+		if (vol <= volControl.getMaximum() && vol >= volControl.getMinimum()) volControl.setValue(vol);
+		else Debug.say("Invalid Volume parameter");
+		if (-1 <= pan && pan <= 1) panControl.setValue(pan);
+		else Debug.say("Invalid pan parameter");
+	}
+	
+	public void setVol(float vol) {
+		setVol(vol, (float) 0.5);
 	}
 }
