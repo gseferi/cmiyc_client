@@ -11,18 +11,30 @@ public abstract class AI extends Player implements Runnable {
 	private boolean running;
 	private boolean update = false;
 
+	/**
+	 * Create a new AI player
+	 * 
+	 * @param handler
+	 *            The AI handler that the AI should use
+	 */
 	public AI(Handler handler) {
 		super(UUID.randomUUID().toString());
 		this.setHandler(handler);
 		setRunning(false);
 	}
 
+	/**
+	 * Start the AI thread
+	 */
 	public void start() {
 		Thread t = new Thread(this);
 		setRunning(true);
 		t.start();
 	}
 
+	/**
+	 * Stop the AI from running
+	 */
 	public void end() {
 		setRunning(false);
 	}
@@ -86,6 +98,6 @@ public abstract class AI extends Player implements Runnable {
 	/**
 	 * Update the state of the AI
 	 */
-	public abstract void updateState();
+	protected abstract void updateState();
 
 }
