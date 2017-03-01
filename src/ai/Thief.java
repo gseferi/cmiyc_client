@@ -22,5 +22,18 @@ public class Thief extends AI {
 		}
 
 	}
-	
+
+	@Override
+	protected void updateState() {
+
+	}
+
+	public ThiefState getState() {
+		return state;
+	}
+
+	public void setState(ThiefState state) {
+		this.state = state;
+	}
+
 }

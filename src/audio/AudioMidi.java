@@ -20,16 +20,12 @@ public class AudioMidi implements AudioPlayer {
 	public AudioMidi(File audioFile) {
 		running = false;
 		this.audioFile = audioFile;
-		try {
-			sequencer = MidiSystem.getSequencer();
-		} catch (MidiUnavailableException e) {
-			e.printStackTrace();
-		}
 	}
 	
 	private void setup() {
 		running = true;
 		try {
+			sequencer = MidiSystem.getSequencer();
 			sequencer.open();
 		} catch (MidiUnavailableException e) {
 			e.printStackTrace();
@@ -60,4 +56,6 @@ public class AudioMidi implements AudioPlayer {
 	public boolean isRunning() {
 		return running;
 	}
+	
+	public void setVol(float vol, float pan) {};
 }
