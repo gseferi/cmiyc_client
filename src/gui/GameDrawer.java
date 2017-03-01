@@ -2,8 +2,8 @@ package gui;
 
 import constants.Colors;
 
-import game.Camera;
-import game.Faction;
+import java.util.ArrayList;
+
 import game.Obstacle;
 import game.Treasure;
 import game.constants.GameSettings;
@@ -12,13 +12,11 @@ import gui.util.FxUtils;
 
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
-import javafx.scene.paint.CycleMethod;
-import javafx.scene.paint.RadialGradient;
-import javafx.scene.paint.Stop;
 import javafx.scene.shape.Arc;
 import javafx.scene.shape.ArcType;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.shape.Shape;
 
 import launcher.Main;
 
@@ -48,100 +46,56 @@ public class GameDrawer {
      */
     public void draw() {
         pane.getChildren().clear();
-        drawCameras();
-        drawFlashlight();
-        drawTreasures();
-        drawObstacles();
-        drawClient();
-    }
 
-    private void drawClient() {
-        // Draw the client player
-        double x = main.player.position.x;
-        double y = main.player.position.y;
-        Circle c = new Circle(GameSettings.Player.radius);
-        if (main.player.faction == Faction.SECURITY) {
-            c.setFill(Color.SPRINGGREEN);
-        } else {
-            c.setFill(Color.INDIANRED);
-        }
-        c.setCenterX(x);
-        c.setCenterY(y);
-        pane.getChildren().add(c);
-    }
+        // Assume security
 
-    private void drawObstacles() {
-        // Draw the obstacles
+        // Make flashlight shapes
+        ArrayList<Shape> flashlightShapes = new ArrayList<>();
+
+        // Client player
+        Arc clientFlashlightArc = new Arc(main.player.position.x,
+                main.player.position.y, GameSettings.Security.lightRadius,
+                GameSettings.Security.lightRadius,
+                -Math.toDegrees(main.player.direction)
+                        - GameSettings.Security.lightRadius / 2,
+                GameSettings.Security.lightArcPercentage * 360 / 100);
+
+        clientFlashlightArc.setType(ArcType.ROUND);
+        clientFlashlightArc.setFill(Color.YELLOW);
+
+        flashlightShapes.add(clientFlashlightArc);
+
+        // Make obstacle shapes
+        ArrayList<Shape> obstacleShapes = new ArrayList<>();
         for (Obstacle o : main.gameData.obstacles) {
-            Rectangle obstacle = new Rectangle(o.topLeft.x, o.topLeft.y,
-                    o.width, o.height);
-            obstacle.setFill(Color.AQUA);
-            pane.getChildren().add(obstacle);
+            Rectangle r = new Rectangle(o.width, o.height, Color.LIGHTBLUE);
+            r.setX(o.topLeft.x);
+            r.setY(o.topLeft.y);
+            obstacleShapes.add(r);
         }
 
-    }
-
-    private void drawFlashlight() {
-        // Draw the flashlight for security
-        if (main.player.faction == Faction.SECURITY) {
-            Arc flashlight = new Arc();
-            flashlight.setType(ArcType.ROUND);
-            flashlight.setCenterX(main.player.position.x);
-            flashlight.setCenterY(main.player.position.y);
-            flashlight.setRadiusX(GameSettings.Security.lightRadius);
-            flashlight.setRadiusY(GameSettings.Security.lightRadius);
-            flashlight.setStartAngle(-Math.toDegrees(main.player.direction)
-                    - GameSettings.Security.lightRadius / 2);
-            flashlight.setLength(
-                    GameSettings.Security.lightArcPercentage * 360 / 100);
-            // flashlight.setStroke(Color.ANTIQUEWHITE);
-            // Sets up light color gradient
-            Stop[] stops = new Stop[] { new Stop(0, Color.WHITE),
-                    new Stop(1, Color.TRANSPARENT) };
-            RadialGradient lg1 = new RadialGradient(0, 0.1,
-                    main.player.position.x, main.player.position.y,
-                    GameSettings.Security.lightRadius, false,
-                    CycleMethod.NO_CYCLE, stops);
-            flashlight.setFill(lg1);
-            pane.getChildren().addAll(flashlight);
-        }
-    }
-
-    private void drawTreasures() {
-        // Draw the treasures
+        // Make treasure shapes
+        ArrayList<Shape> treasureShapes = new ArrayList<>();
         for (Treasure t : main.gameData.treasures) {
-            Circle treasure = new Circle(t.position.x, t.position.y,
-                    GameSettings.Treasure.radius);
-            treasure.setFill(Color.YELLOW);
-            pane.getChildren().add(treasure);
+            Circle c = new Circle(GameSettings.Treasure.radius,
+                    Color.LIGHTYELLOW);
+            c.setCenterX(t.position.x);
+            c.setCenterY(t.position.y);
+            treasureShapes.add(c);
         }
-    }
 
-    private void drawCameras() {
-        // Draw the cameras
-        for (Camera c : main.gameData.cameras) {
-            Rectangle box = new Rectangle(c.position.x, c.position.y, 10, 10);
-            box.setStroke(Color.GHOSTWHITE);
-            box.setStrokeWidth(4);
-            box.setRotate(-Math.toDegrees(c.direction)
-                    - GameSettings.Security.lightRadius / 2);
-            Arc camera = new Arc();
-            camera.setType(ArcType.ROUND);
-            camera.setCenterX(c.position.x + 5);
-            camera.setCenterY(c.position.y + 5);
-            camera.setRadiusX(GameSettings.Security.lightRadius);
-            camera.setRadiusY(GameSettings.Security.lightRadius);
-            camera.setStartAngle(-Math.toDegrees(c.direction)
-                    - GameSettings.Security.lightRadius / 2);
-            camera.setLength(
-                    GameSettings.Security.lightArcPercentage * 360 / 100);
-            Stop[] stops = new Stop[] { new Stop(0, Color.WHITE),
-                    new Stop(1, Color.TRANSPARENT) };
-            RadialGradient lg1 = new RadialGradient(0, 0.1, c.position.x,
-                    c.position.y, GameSettings.Security.lightRadius, false,
-                    CycleMethod.NO_CYCLE, stops);
-            camera.setFill(lg1);
-            pane.getChildren().addAll(camera, box);
-        }
+        // Make player shapes
+
+        // Client player
+        Circle clientPlayerShape = new Circle(GameSettings.Player.radius,
+                Color.GREEN);
+        clientPlayerShape.setCenterX(main.player.position.x);
+        clientPlayerShape.setCenterY(main.player.position.y);
+
+        // Draw
+        pane.getChildren().addAll(obstacleShapes);
+        pane.getChildren().addAll(treasureShapes);
+        pane.getChildren().addAll(flashlightShapes);
+        pane.getChildren().add(clientPlayerShape);
     }
 }
