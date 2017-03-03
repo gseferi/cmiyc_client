@@ -1,5 +1,6 @@
-package graphics;
+package gui;
 
+import constants.Colors;
 import game.Camera;
 import game.Obstacle;
 import game.Player;

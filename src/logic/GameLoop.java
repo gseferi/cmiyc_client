@@ -1,7 +1,6 @@
 package logic;
 
-import graphics.GameDrawer;
-
+import gui.GameDrawer;
 import javafx.application.Platform;
 
 /**

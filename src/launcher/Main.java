@@ -21,12 +21,6 @@ import game.GameMode;
 import game.Player;
 import game.constants.GameSettings;
 
-import gui.ClientLauncher;
-import gui.GameScreen;
-import gui.OfflineScreen;
-import gui.util.ConnectButton;
-import gui.util.LauncherButton;
-import gui.util.SelecterButton;
 
 import states.ClientState;
 
@@ -42,7 +36,7 @@ public class Main extends JFrame {
     private int port;
     private String host;
 
-    private ClientLauncher gui;
+    //private ClientLauncher gui;
 
     public ObjectInputStream in;
     public ObjectOutputStream out;
@@ -54,18 +48,9 @@ public class Main extends JFrame {
     private ClientSender sender;
     private ClientReceiver receiver;
 
-    private OfflineScreen offlineScreen;
-
-    private GameScreen gameScreen;
-
     private ArrayList<Transferable> queue;
 
     public void launcherClick() {
-        if (this.gui.launcher.state == LauncherButton.State.START) {
-            this.gui.launcher.setState(LauncherButton.State.FIND);
-            this.gui.slider.slideOut();
-        } else {
-            /* find match process */ }
     }
 
     public void selecterClick(GameMode _mode) {
@@ -73,15 +58,7 @@ public class Main extends JFrame {
         this.player.mode = _mode;
 
         if (_mode == GameMode.LONG) {
-            this.gui.longSelecter.state = SelecterButton.State.SELECTED;
-            this.gui.shortSelecter.state = SelecterButton.State.DEFAULT;
-            this.gui.shortSelecter.repaint();
-            this.gui.longSelecter.repaint();
         } else {
-            this.gui.shortSelecter.state = SelecterButton.State.SELECTED;
-            this.gui.longSelecter.state = SelecterButton.State.DEFAULT;
-            this.gui.shortSelecter.repaint();
-            this.gui.longSelecter.repaint();
         }
 
     }
@@ -91,19 +68,12 @@ public class Main extends JFrame {
         this.player.faction = _faction;
 
         if (_faction == Faction.SECURITY) {
-            this.gui.securitySelecter.state = SelecterButton.State.SELECTED;
-            this.gui.thiefSelecter.state = SelecterButton.State.DEFAULT;
-            this.gui.securitySelecter.repaint();
-            this.gui.thiefSelecter.repaint();
         } else {
-            this.gui.thiefSelecter.state = SelecterButton.State.SELECTED;
-            this.gui.securitySelecter.state = SelecterButton.State.DEFAULT;
-            this.gui.securitySelecter.repaint();
-            this.gui.thiefSelecter.repaint();
         }
 
     }
 
+    /*
     private void connecterClick(ConnectButton.State _state) {
 
         if (_state == ConnectButton.State.CONNECT) {
@@ -114,20 +84,7 @@ public class Main extends JFrame {
 
     }
 
-    private void initOfflineScreen() {
-        this.offlineScreen = new OfflineScreen(this);
-        offlineScreen
-                .setMinimumSize(new Dimension(GameSettings.Arena.outerSize));
-        offlineScreen
-                .setPreferredSize(new Dimension(GameSettings.Arena.outerSize));
-        offlineScreen.setOpaque(false);
-        this.gui.offlineWrapper.add(offlineScreen, BorderLayout.CENTER);
-
-        this.gui.offlineWrapper.repaint();
-        this.gui.offlineWrapper.revalidate();
-        this.gui.pack();
-    }
-
+    */
     private boolean validPort(String _port) {
         // Check if port is valid;
         return true;
@@ -135,13 +92,15 @@ public class Main extends JFrame {
 
     private String[] getInputs() {
 
+    	/*
         String[] splits = this.gui.hostInput.getText().split(":");
 
         String[] inputs = new String[3];
         inputs[0] = splits[0];
         inputs[1] = splits[1];
         inputs[2] = this.gui.userInput.getText();
-
+    	*/
+    	String[] inputs = {"localhost","1234","Unknown"};
         return inputs;
     }
 
@@ -208,20 +167,23 @@ public class Main extends JFrame {
     }
 
     public void confirmConnection() {
+    	/*
         this.gui.connecter.setState(ConnectButton.State.DISCONNECT);
         this.gui.connecter.repaint();
 
         this.gui.userInputPanel.setVisible(false);
         this.gui.hostInputPanel.setVisible(false);
 
-        /* DELETE THIS!!!!!! */this.initGameScreen();
+        /* DELETE THIS!!!!!! this.initGameScreen();
         this.offlineScreen.setVisible(false);
         this.gui.wrapper.revalidate();
         this.gui.wrapper.repaint();
+        */
     }
 
     public void disconnect() {
 
+    	/*
         this.offlineScreen.setVisible(true);
         this.gui.offlineWrapper.revalidate();
         this.gui.offlineWrapper.repaint();
@@ -236,7 +198,7 @@ public class Main extends JFrame {
             this.in.close();
             this.out.close();
         } catch (Exception _exception) {
-            /* Already Closed */ }
+            /* Already Closed  }
 
         this.gui.userInput.setText("");
         this.gui.userInputPanel.setVisible(true);
@@ -245,6 +207,7 @@ public class Main extends JFrame {
 
         this.gui.connecter.setState(ConnectButton.State.CONNECT);
         this.gui.connecter.repaint();
+        */
     }
 
     public Main() {
@@ -273,11 +236,12 @@ public class Main extends JFrame {
         // this.state = ClientState.DISCONNECTED;
         this.player = new Player(this.id);
 
-        this.gui = new ClientLauncher();
+//        this.gui = new ClientLauncher();
 
     }
 
     private void initGameScreen() {
+    	/*
         this.gameScreen = new GameScreen();
         gameScreen.setMinimumSize(new Dimension(GameSettings.Arena.outerSize));
         gameScreen
@@ -287,10 +251,11 @@ public class Main extends JFrame {
 
         this.gui.gameWrapper.revalidate();
         this.gui.gameWrapper.repaint();
+    	*/
     }
 
     private void initGUI() {
-
+    	/*
         this.gui.launcher.addActionListener(event -> this.launcherClick());
 
         this.gui.shortSelecter
@@ -311,6 +276,7 @@ public class Main extends JFrame {
         this.gui.pack();
 
         this.gui.contentPane.setMinimumSize(this.gui.getSize());
+    	*/
     }
 
     public static void main(String _arguments[]) {
