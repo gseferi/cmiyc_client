@@ -1,26 +1,32 @@
 package sample;
 
-import com.sun.xml.internal.bind.v2.runtime.reflect.opt.Const;
 import javafx.application.Application;
-
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-import javafx.geometry.Rectangle2D;
-import javafx.stage.Screen;
+import javafx.scene.Scene;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;;
+import javafx.stage.StageStyle;
+
 
 public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
+
+
+        StackPane base = new StackPane();
+        Scene scene = new Scene(base);
         SlideScreen slideScreen = new SlideScreen();
-       // primaryStage.initStyle(StageStyle.UNDECORATED);
+       // primaryStage.initStyle(StageStyle.TRANSPARENT);
         WelcomeScreen welcomeScreen = new WelcomeScreen();
 
         GameScreen gameScreen = new GameScreen();
+        base.getChildren().addAll(gameScreen, welcomeScreen, slideScreen);
 
-        primaryStage.setScene(slideScreen.drawScene());
+        primaryStage.widthProperty().addListener((observable, oldValue, newValue) -> {
+            welcomeScreen.setAnchor(newValue.doubleValue());
+        });
+
+        primaryStage.setScene(scene);
         primaryStage.show();
 
     }

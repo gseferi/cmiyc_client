@@ -1,5 +1,5 @@
 #slider {
-    -fx-background-color: #404040;
+    -fx-background-color: #202020;
     -fx-padding: 5.5;
 
 }
@@ -42,7 +42,7 @@
 }
 
 #1vs2:selected {
-    -fx-background-color: #202020;
+    -fx-background-color: #000000;
     -fx-text-fill: white;
     -fx-pref-width: 147;
 }
@@ -59,7 +59,7 @@
 }
 
 #2vs3:selected {
-    -fx-background-color: #202020;
+    -fx-background-color: #000000;
     -fx-text-fill: white;
     -fx-pref-width: 147;
 }
@@ -76,7 +76,7 @@
 }
 
 #security:selected {
-    -fx-background-color: #202020;
+    -fx-background-color: #000000;
     -fx-text-fill: white;
     -fx-pref-width: 147;
 }
@@ -94,7 +94,7 @@
 }
 
 #thief:selected {
-    -fx-background-color: #202020;
+    -fx-background-color: #000000;
     -fx-text-fill: white;
     -fx-pref-width: 147;
 }

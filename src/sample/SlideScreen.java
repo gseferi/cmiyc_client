@@ -1,7 +1,6 @@
 package sample;
 
 import javafx.animation.TranslateTransition;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.util.Duration;
@@ -11,9 +10,8 @@ import java.io.IOException;
  * Created by Gerta on 24/02/2017.
  */
 
-public class SlideScreen {
+public class SlideScreen extends AnchorPane {
 
-    private AnchorPane sliderLayer;
     private AnchorPane slider;
     private ToolBar toolBar;
     private BorderPane together;
@@ -33,7 +31,6 @@ public class SlideScreen {
     private TranslateTransition sliderTranslation;
 
     public SlideScreen() throws IOException {
-        this.sliderLayer = new AnchorPane();
         this.slider = new AnchorPane();
         this.together = new BorderPane();
         this.mainButton = new Button("Find Game");
@@ -50,19 +47,20 @@ public class SlideScreen {
         this.security = new ToggleButton("Security");
         this.thief = new ToggleButton("Thief");
         this.group2 = new ToggleGroup();
+        this.drawScene();
     }
 
 
-    public Scene drawScene() {
+    public void drawScene() {
         slider.getStylesheets().add("styles/slider.css");
-        sliderLayer.getStylesheets().add("styles/sliderLayer.css");
+        this.getStylesheets().add("styles/sliderLayer.css");
 
         toolBar.setPrefHeight(40);
-        sliderLayer.setPrefWidth(Constants.ScreenWidth);
-        sliderLayer.setPrefHeight(Constants.ScreenHeight);
-        sliderLayer.getChildren().addAll(slider, toolBar);
+        this.setPrefWidth(Constants.ScreenWidth);
+        this.setPrefHeight(Constants.ScreenHeight);
+        this.getChildren().addAll(slider, toolBar);
 
-        slider.setPrefWidth(300);
+        slider.setPrefWidth(250);
         slider.setPrefHeight(Constants.ScreenHeight);
         username.setPromptText("username");
         host.setPromptText("host");
@@ -96,7 +94,7 @@ public class SlideScreen {
 
         toolBar.setPrefWidth(Constants.ScreenWidth);
         slider.setId("slider");
-        sliderLayer.setId("sliderLayer");
+        this.setId("sliderLayer");
         toolBar.setId("toolbar");
         mainButton.setId("mainButton");
         username.setId("username");
@@ -124,7 +122,7 @@ public class SlideScreen {
         sliderTranslation = new TranslateTransition(Duration.millis(400), slider);
 
         sliderTranslation.setFromX(0);
-        sliderTranslation.setToX(sliderLayer.getPrefWidth() - slider.getPrefWidth());
+        sliderTranslation.setToX(this.getPrefWidth() - slider.getPrefWidth());
         sliderTranslation.setRate(1);
         sliderTranslation.play();
 
@@ -139,20 +137,18 @@ public class SlideScreen {
             }
         });
 
-        this.sliderLayer.setOnMouseClicked(event -> {
+        this.setOnMouseClicked(event -> {
             if(this.sliderTranslation.getRate() == -1) {
                 slideOut();
             }
         });
 
-
-        return new Scene(sliderLayer);
     }
 
     public void slideIn(){
         sliderTranslation.setRate(-1);
         sliderTranslation.play();
-        sliderLayer.setPrefWidth(slider.getPrefWidth());
+        this.setPrefWidth(slider.getPrefWidth());
     }
 
     public void slideOut() {
